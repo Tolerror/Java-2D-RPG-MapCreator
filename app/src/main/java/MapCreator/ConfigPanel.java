@@ -37,7 +37,7 @@ public class ConfigPanel extends JPanel{
         JLabel label2 = new JLabel("Cols:");
         JTextField textField2 = new JTextField(20);
 
-        JLabel label3 = new JLabel("Tile Size:");
+        JLabel label3 = new JLabel("Tile Size:   (default 32x32)");
         JTextField textField3 = new JTextField(20);
 
         JButton confirmButton = new JButton("Confirm");

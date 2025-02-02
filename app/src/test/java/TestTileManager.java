@@ -21,8 +21,8 @@ public class TestTileManager {
 
     @Test
     public void testgetTileImage(){
-        for(int i = 0 ; i < tm.tile.length ; i++){
-            assertTrue(tm.tile[i] != null && tm.tile[i] instanceof Tile);
+        for(int i = 0 ; i < tm.tile.size() ; i++){
+            assertTrue(tm.tile.get(i) != null && tm.tile.get(i) instanceof Tile);
             
         }
         
