@@ -80,14 +80,18 @@ public class TileManager {
                 for(int tileCol = 0 ; tileCol < cols ; tileCol++){
                     for(int tileRow = 0 ; tileRow < rows ; tileRow++){
 
-                        //testing purposes
-                        if(imageCnt == 50) return;
+                        
                         
                         int x = tileCol*tileWidth;
                         int y = tileRow*tileHeight;
-
+                        
                         Tile initTile = new Tile();
                         initTile.image = tileSheet.getSubimage(x, y, tileWidth, tileHeight);
+                        if(isTileFullyTransparent(initTile.image)){
+                            continue; //skip to next tile
+                        }
+
+
                         tile.add(initTile); 
 
                          imageCnt++;
@@ -100,6 +104,33 @@ public class TileManager {
         }
 
 
+    }
+
+    private boolean isTileFullyTransparent(BufferedImage image){
+
+        //if image is invalid ignore it
+        if(image == null || image.getWidth() != tileWidth || image.getHeight() != tileHeight){
+            return false;
+        }
+
+        for(int x = 0 ; x < tileWidth ; x++){
+            for(int y = 0 ; y < tileHeight ; y++){
+                int pixel = image.getRGB(x,y);
+
+                /*
+                 * ARGB color model (32 bit integer color representation).
+                 * Each part (A, R, G, B) are 8 bits.
+                 * Last 8 bits rep A, Alpha. If A = 0 -> fully transparent 
+                 */
+                int alpha = (pixel >> 24) & 0xFF; //Copies alpha part
+                
+                if(alpha != 0){
+                    return false;
+                }
+            }
+        }
+        
+        return true;
     }
 
 
