@@ -56,20 +56,17 @@ public class TileManager {
     	
 
         try{
-            tileSheet_1 = ImageIO.read(getClass().getResourceAsStream("/tiles/Tileset-Terrain2.png"));
-            tileSheet_2 = ImageIO.read(getClass().getResourceAsStream("/tiles/Tileset_faulty.png"));
+            tileSheet_1 = ImageIO.read(getClass().getResourceAsStream("/tilesheets/Tileset-Terrain2.png"));
+            tileSheet_2 = ImageIO.read(getClass().getResourceAsStream("/tilesheets/Tileset_faulty.png"));
 
             tileSheetFormatter(tileSheet_1);
             
-
-
-
-
         }catch(IOException e){
             e.printStackTrace();
         }
 
     }
+
 
     private void tileSheetFormatter(BufferedImage tileSheet){
         int imageCnt = 0;
@@ -94,10 +91,11 @@ public class TileManager {
 
                         tile.add(initTile); 
 
-                         imageCnt++;
+                         //imageCnt++;
 
                     }
                 }
+        System.out.println("Loaded tiles: " + imageCnt);
 
         }catch(Error e){
             e.printStackTrace();
