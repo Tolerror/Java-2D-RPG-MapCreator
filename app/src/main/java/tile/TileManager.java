@@ -129,6 +129,7 @@ public class TileManager {
                       
                         if(fileProperties.exists() && fileTile.exists()){
 
+                            initTile.loadProperties(x,y,"src/main/resources/tilesproperties");
                             tile.add(initTile); 
                         }
                     }
