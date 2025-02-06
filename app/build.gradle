@@ -9,6 +9,7 @@ plugins {
 dependencies {
     implementation 'org.apache.commons:commons-text'
     implementation project(':utilities')
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0' //adds jackson for json properties functionality
 }
 
 tasks.register("game", JavaExec){
@@ -25,22 +26,27 @@ tasks.register("map", JavaExec){
 
 tasks.register('createTilesDirectory') {
     def tilesPath = layout.projectDirectory.dir("src/main/resources/tiles") // Safe reference
+    def tilesPropertiesPath = layout.projectDirectory.dir("src/main/resources/tilesproperties")
 
     outputs.dir(tilesPath) // Mark as an output directory (Gradle optimization)
+    outputs.dir(tilesPropertiesPath)
 
     doLast {
         File tilesDir = tilesPath.asFile
+        File tilesPropDir = tilesPropertiesPath.asFile
         if (!tilesDir.exists()) {
             tilesDir.mkdirs()
             println "Created 'tiles' directory in resources."
         }
+
+        if (!tilesPropDir.exists()) {
+            tilesPropDir.mkdirs()
+            println "Created 'tilesproperties' directory in resources."
+        }
+
     }
 }
 
-// Ensure the directory is created before Java compilation
-// tasks.named('compileJava').configure {
-//     dependsOn tasks.named('createTilesDirectory')
-// }
 
 //Ensure processResources depends on createTilesDirectory
 tasks.named('processResources').configure {

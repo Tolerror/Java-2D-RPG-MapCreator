@@ -8,8 +8,10 @@ import java.awt.Graphics2D;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 
 
 public class TileManager {
@@ -20,6 +22,8 @@ public class TileManager {
     BufferedImage tileSheet_2;
     public int mapTileNum[][];
     public ArrayList<Tile> tile;
+    String fileDirProperties = "C:\\Users\\tolga\\onedrive\\dokument\\github\\2d-java-rpg\\app\\src\\main\\resources\\tilesproperties";
+    String fileDir = "C:\\Users\\tolga\\onedrive\\dokument\\github\\2d-java-rpg\\app\\src\\main\\resources\\tiles";
 
     //default tile sizes
     static int tileWidth = 32;
@@ -74,13 +78,7 @@ public class TileManager {
         try{
                 int rows = tileSheet.getHeight()/tileHeight;
                 int cols = tileSheet.getWidth()/tileWidth;
-
-                //Create tile directory 
-                File tiles = new File("../../resources/tiles");
-                if(!tiles.exists()){
-                    tiles.mkdirs();
-                }
-
+                
 
                 for(int tileCol = 0 ; tileCol < cols ; tileCol++){
                     for(int tileRow = 0 ; tileRow < rows ; tileRow++){
@@ -97,13 +95,45 @@ public class TileManager {
                         }
 
 
-                        tile.add(initTile); 
+                        File fileProperties = new File(fileDirProperties, "tile_" + x + "_" + y + ".properties");
+                        File fileTile = new File(fileDir, "tile_" + x + "_" + y + ".png");
 
-                         //imageCnt++;
+                        
+                        
 
+                        
+                        // Save properties file
+                        if(!fileProperties.exists()){ //skip if it already exists
+
+                            Properties tileProperties = new Properties();
+                            tileProperties.setProperty("collision", String.valueOf(initTile.collision));
+    
+                            try{
+                                FileOutputStream outProp = new FileOutputStream(fileProperties);
+                                tileProperties.store(outProp, "Tile Properties");
+                            }catch(IOException e){
+                                e.printStackTrace();
+                            }
+                        }
+
+
+                        // Save .png file
+                        if(!fileTile.exists()){ //skip if it already exists
+                            
+                            try {
+                                ImageIO.write(initTile.image, "PNG", fileTile);
+                            } catch (IOException e) {
+                                System.err.println("Error saving image: " + e.getMessage());
+                            }
+                        }
+                      
+                        if(fileProperties.exists() && fileTile.exists()){
+
+                            tile.add(initTile); 
+                        }
                     }
                 }
-        //System.out.println("Loaded tiles: " + imageCnt);
+       
 
         }catch(Error e){
             e.printStackTrace();

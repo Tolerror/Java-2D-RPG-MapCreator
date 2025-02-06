@@ -3,3 +3,7 @@
 
 # Ignore Gradle build output directory
 build
+
+# Ignore tiles
+app/src/main/resources/tilesproperties
+app/src/main/resources/tiles
