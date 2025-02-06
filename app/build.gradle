@@ -22,6 +22,31 @@ tasks.register("map", JavaExec){
     classpath = sourceSets.main.runtimeClasspath
 }
 
+
+tasks.register('createTilesDirectory') {
+    def tilesPath = layout.projectDirectory.dir("src/main/resources/tiles") // Safe reference
+
+    outputs.dir(tilesPath) // Mark as an output directory (Gradle optimization)
+
+    doLast {
+        File tilesDir = tilesPath.asFile
+        if (!tilesDir.exists()) {
+            tilesDir.mkdirs()
+            println "Created 'tiles' directory in resources."
+        }
+    }
+}
+
+// Ensure the directory is created before Java compilation
+// tasks.named('compileJava').configure {
+//     dependsOn tasks.named('createTilesDirectory')
+// }
+
+//Ensure processResources depends on createTilesDirectory
+tasks.named('processResources').configure {
+    dependsOn tasks.named('createTilesDirectory')
+}
+
 application {
     // Define the main class for the application.
     mainClass = 'main.Main'   //This is the default main if no other argument is given

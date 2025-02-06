@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.io.BufferedReader;
+import java.io.File;
 
 
 public class TileManager {
@@ -69,10 +70,17 @@ public class TileManager {
 
 
     private void tileSheetFormatter(BufferedImage tileSheet){
-        int imageCnt = 0;
+        //int imageCnt = 0;
         try{
                 int rows = tileSheet.getHeight()/tileHeight;
                 int cols = tileSheet.getWidth()/tileWidth;
+
+                //Create tile directory 
+                File tiles = new File("../../resources/tiles");
+                if(!tiles.exists()){
+                    tiles.mkdirs();
+                }
+
 
                 for(int tileCol = 0 ; tileCol < cols ; tileCol++){
                     for(int tileRow = 0 ; tileRow < rows ; tileRow++){
@@ -95,7 +103,7 @@ public class TileManager {
 
                     }
                 }
-        System.out.println("Loaded tiles: " + imageCnt);
+        //System.out.println("Loaded tiles: " + imageCnt);
 
         }catch(Error e){
             e.printStackTrace();
