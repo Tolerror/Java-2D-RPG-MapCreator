@@ -43,7 +43,7 @@ public class TileManager {
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/maps/map.txt");
+        loadMap("/maps/map4.txt");
 
     }
 
@@ -65,6 +65,7 @@ public class TileManager {
             tileSheet_2 = ImageIO.read(getClass().getResourceAsStream("/tilesheets/Tileset_faulty.png"));
 
             tileSheetFormatter(tileSheet_1);
+            tileSheetFormatter(tileSheet_2);
             
         }catch(IOException e){
             e.printStackTrace();

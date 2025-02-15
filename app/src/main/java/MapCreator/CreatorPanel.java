@@ -176,7 +176,8 @@ public class CreatorPanel extends JPanel{
 
             //Side Panel with tile images
             JPanel tilePanel = new JPanel();
-            tilePanel.setLayout(new BoxLayout(tilePanel, BoxLayout.Y_AXIS));
+            int numColumns = 4;
+            tilePanel.setLayout(new GridLayout(0, numColumns, 5,5));
 
             for (Tile tileImage : tileImages){
                 JLabel label = new JLabel(new ImageIcon(tileImage.image)); //load each bufferedImage onto a label
@@ -189,7 +190,7 @@ public class CreatorPanel extends JPanel{
                 public void mouseClicked(MouseEvent e){
                     selectedTile = tileImage;           //store selected tile
                     updateTilePanelSelection(tilePanel, label);
-                    System.out.println("Tile Selected: " + selectedTile);
+                    //System.out.println("Tile Selected: " + selectedTile);
                     }
                     
                 @Override
