@@ -24,7 +24,8 @@ public class TileManager {
     public ArrayList<Tile> tile;
     String fileDirProperties = "C:\\Users\\tolga\\onedrive\\dokument\\github\\2d-java-rpg\\app\\src\\main\\resources\\tilesproperties";
     String fileDir = "C:\\Users\\tolga\\onedrive\\dokument\\github\\2d-java-rpg\\app\\src\\main\\resources\\tiles";
-
+    int imageCnt = 0;
+    
     //default tile sizes
     static int tileWidth = 32;
     static int tileHeight = 32;
@@ -75,7 +76,8 @@ public class TileManager {
 
 
     private void tileSheetFormatter(BufferedImage tileSheet){
-        //int imageCnt = 0;
+      
+
         try{
                 int rows = tileSheet.getHeight()/tileHeight;
                 int cols = tileSheet.getWidth()/tileWidth;
@@ -96,8 +98,9 @@ public class TileManager {
                         }
 
 
-                        File fileProperties = new File(fileDirProperties, "tile_" + x + "_" + y + ".properties");
-                        File fileTile = new File(fileDir, "tile_" + x + "_" + y + ".png");
+                        File fileProperties = new File(fileDirProperties, this.imageCnt + "_tile_" + x + "_" + y + ".properties");
+                        File fileTile = new File(fileDir, this.imageCnt + "_tile_" + x + "_" + y + ".png");
+                        initTile.arrayIndex = this.imageCnt;
 
                         
                         
@@ -108,9 +111,10 @@ public class TileManager {
 
                             Properties tileProperties = new Properties();
                             tileProperties.setProperty("collision", String.valueOf(initTile.collision));
-    
-                            try{
-                                FileOutputStream outProp = new FileOutputStream(fileProperties);
+                            tileProperties.setProperty("arrayIndex", String.valueOf(initTile.arrayIndex));
+                            
+
+                            try(FileOutputStream outProp = new FileOutputStream(fileProperties)){
                                 tileProperties.store(outProp, "Tile Properties");
                             }catch(IOException e){
                                 e.printStackTrace();
@@ -128,6 +132,8 @@ public class TileManager {
                             }
                         }
                       
+                        this.imageCnt++;
+
                         if(fileProperties.exists() && fileTile.exists()){
 
                             initTile.loadProperties(x,y,"src/main/resources/tilesproperties");

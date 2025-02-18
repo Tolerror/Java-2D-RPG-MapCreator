@@ -11,12 +11,13 @@ public class Tile{
     public BufferedImage image;
     public boolean collision = false;
     public String filePath;
+    public int arrayIndex;
 
 
 
     public void loadProperties(int x, int y, String filepath) {
         // Define the path to the properties file based on the tile's x and y
-        File fileProperties = new File(filepath, "tile_" + x + "_" + y + ".properties");
+        File fileProperties = new File(filepath, arrayIndex + "_tile_" + x + "_" + y + ".properties");
 
         // Use 'try-with-resources' to automatically close the FileInputStream
         try (FileInputStream inProp = new FileInputStream(fileProperties)) {
@@ -31,6 +32,11 @@ public class Tile{
             if (tileProperties.containsKey("filePath")) {
                 this.filePath = tileProperties.getProperty("filePath");
             }
+            if (tileProperties.containsKey("arrayIndex")){
+                this.arrayIndex = Integer.parseInt(tileProperties.getProperty("arrayIndex"));
+        
+            }
+
 
         } catch (IOException e) {
             System.err.println("Error loading properties for tile (" + x + ", " + y + "): " + e.getMessage());
