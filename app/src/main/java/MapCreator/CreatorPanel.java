@@ -316,7 +316,7 @@ public class CreatorPanel extends JPanel{
                         for (int c = 0; c < col; c++) {
                             // Write the tile value (or some identifier) to the file
                             if (map[r][c] != null) {
-                                writer.write("1 "); // Assuming non-null tiles are '1'
+                                writer.write( String.valueOf(map[r][c].arrayIndex) + " "); // Assuming non-null tiles are '1'
                             } else {
                                 writer.write("0 "); // Empty spaces are '0'
                             }

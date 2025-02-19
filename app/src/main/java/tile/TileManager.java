@@ -24,7 +24,7 @@ public class TileManager {
     public ArrayList<Tile> tile;
     String fileDirProperties = "C:\\Users\\tolga\\onedrive\\dokument\\github\\2d-java-rpg\\app\\src\\main\\resources\\tilesproperties";
     String fileDir = "C:\\Users\\tolga\\onedrive\\dokument\\github\\2d-java-rpg\\app\\src\\main\\resources\\tiles";
-    int imageCnt = 0;
+    int imageCnt = 1;
     
     //default tile sizes
     static int tileWidth = 32;
@@ -44,7 +44,7 @@ public class TileManager {
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/maps/map4.txt");
+        loadMap("/maps/map.txt");
 
     }
 
@@ -58,7 +58,7 @@ public class TileManager {
 
 
     public void getTileImage(){
-    	
+    	tile.add(new Tile());
     	
 
         try{
@@ -82,7 +82,7 @@ public class TileManager {
                 int rows = tileSheet.getHeight()/tileHeight;
                 int cols = tileSheet.getWidth()/tileWidth;
                 
-
+                
                 for(int tileCol = 0 ; tileCol < cols ; tileCol++){
                     for(int tileRow = 0 ; tileRow < rows ; tileRow++){
 
@@ -180,34 +180,35 @@ public class TileManager {
 
     public void loadMap(String filePath){
         try {
-            InputStream is = getClass().getResourceAsStream(filePath);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                InputStream is = getClass().getResourceAsStream(filePath);
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-            int col = 0;
-            int row = 0;
+                
+                int row = 0;
 
-            while (col < gp.maxWorldCol && row < gp.maxWorldCol){
+                //int fileCols = (br.readLine()).split(" ").length;
+                
+                while(row < gp.maxWorldRow){
+                    
+                    String line = br.readLine();
+                    if(line == null) break;
+                    
+                    String[] numbers = line.split(" ");
+                
+                    for(int col = 0 ; col < Math.min(numbers.length, gp.maxWorldCol) ; col++){
+                        
+                        mapTileNum[col][row] = Integer.parseInt(numbers[col]);
+                    }
 
-                String line = br.readLine();
-
-                while (col < gp.maxWorldCol){
-                    String numbers[] = line.split(" ");
-
-                    int num = Integer.parseInt(numbers[col]);
-
-                    mapTileNum[col][row] = num;
-                    col++;
-                }
-                if (col == gp.maxWorldCol){
-                    col = 0;
                     row++;
+
                 }
+                    br.close();
+
+    
+            }catch(Exception e){
+                e.printStackTrace();
             }
-            br.close(); // After we're done reading, close the buffer
-
-        }catch(Exception e){
-
-        }
     }
 
 
@@ -220,6 +221,7 @@ public class TileManager {
         while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow){
             
             int tileNum = mapTileNum[worldCol][worldRow];
+            
 
             //player position in world
             int worldX = worldCol*gp.tileSize;
@@ -234,6 +236,7 @@ public class TileManager {
                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX && 
                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY && 
                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+                
                     g2.drawImage(tile.get(tileNum).image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
 

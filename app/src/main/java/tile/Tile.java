@@ -39,7 +39,7 @@ public class Tile{
 
 
         } catch (IOException e) {
-            System.err.println("Error loading properties for tile (" + x + ", " + y + "): " + e.getMessage());
+            System.err.println("Error loading properties for tile (" + arrayIndex +"_" + x + ", " + y + "): " + e.getMessage());
         }
     }
 
