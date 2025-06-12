@@ -8,3 +8,4 @@ build
 app/src/main/resources/tilesproperties
 app/src/main/resources/tiles
 app/bin
+app/src/main/generated

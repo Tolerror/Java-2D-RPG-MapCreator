@@ -22,8 +22,9 @@ public class TileManager {
     BufferedImage tileSheet_2;
     public int mapTileNum[][];
     public ArrayList<Tile> tile;
-    String fileDirProperties = "C:\\Users\\tolga\\onedrive\\dokument\\github\\2d-java-rpg\\app\\src\\main\\resources\\tilesproperties";
-    String fileDir = "C:\\Users\\tolga\\onedrive\\dokument\\github\\2d-java-rpg\\app\\src\\main\\resources\\tiles";
+    File generatedDir;
+    File generatedPropertiesDir;
+    File generatedFileDir;
     int imageCnt = 1;
     
     //default tile sizes
@@ -65,6 +66,31 @@ public class TileManager {
             tileSheet_1 = ImageIO.read(getClass().getResourceAsStream("/tilesheets/Tileset-Terrain2.png"));
             tileSheet_2 = ImageIO.read(getClass().getResourceAsStream("/tilesheets/Tileset_faulty.png"));
 
+            generatedDir = new File("src/main/generated");
+            generatedFileDir = new File(generatedDir, "tiles");
+            generatedPropertiesDir = new File(generatedDir, "tilesproperties");
+
+            if(!generatedDir.exists()){
+                generatedDir.mkdirs();
+                System.out.println("Created 'generated' directory");
+            }else{
+                System.out.println("Located 'generated' directory");
+            }
+
+            if(!generatedFileDir.exists()){
+                generatedFileDir.mkdirs();
+                System.out.println("Created 'tiles' directory");
+            }else{
+                System.out.println("Located 'tiles' directory");
+            }
+
+            if(!generatedPropertiesDir.exists()){
+                generatedPropertiesDir.mkdirs();
+                System.out.println("Created 'tilesproperties' directory");
+            }else{
+                System.out.println("Located 'tilesproperties' directory");
+            }
+
             tileSheetFormatter(tileSheet_1);
             tileSheetFormatter(tileSheet_2);
             
@@ -98,8 +124,8 @@ public class TileManager {
                         }
 
 
-                        File fileProperties = new File(fileDirProperties, this.imageCnt + "_tile_" + x + "_" + y + ".properties");
-                        File fileTile = new File(fileDir, this.imageCnt + "_tile_" + x + "_" + y + ".png");
+                        File fileProperties = new File(generatedPropertiesDir, this.imageCnt + "_tile_" + x + "_" + y + ".properties");
+                        File fileTile = new File(generatedFileDir, this.imageCnt + "_tile_" + x + "_" + y + ".png");
                         initTile.arrayIndex = this.imageCnt;
 
                         
@@ -136,7 +162,7 @@ public class TileManager {
 
                         if(fileProperties.exists() && fileTile.exists()){
 
-                            initTile.loadProperties(x,y,"src/main/resources/tilesproperties");
+                            initTile.loadProperties(x,y, generatedPropertiesDir.getPath());
                             tile.add(initTile); 
                         }
                     }
