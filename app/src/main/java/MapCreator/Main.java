@@ -19,8 +19,9 @@ public class Main{
         window.setVisible(true);
 
 
-        ConfigPanel specPanel = new ConfigPanel(this);
-        window.add(specPanel);
+        // ConfigPanel specPanel = new ConfigPanel(this);
+        SpecPanel specpanel = new SpecPanel();
+        window.add(specpanel);
         window.pack();
 
         window.setLocationRelativeTo(null);

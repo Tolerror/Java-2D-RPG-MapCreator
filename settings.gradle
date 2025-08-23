@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = '2D-Java-RPG'
-include('app', 'list', 'utilities')
+include('app')

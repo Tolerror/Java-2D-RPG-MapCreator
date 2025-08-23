@@ -12,3 +12,6 @@ or
 # To test the project
 ./gradlew test
 
+# Trivia
+The game runs on linux given that java-openjdk-21 is installed. 
+The performance is not great and could be run with wine for improved performance. 
